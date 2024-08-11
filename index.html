@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World LLM</title>
+    <script>
+        async function fetchLLMResponse() {
+            const prompt = document.getElementById('prompt').value;
+            const apiKey = '17f7aa98a0634f4ca3f8f2c643a37dbe'; // Replace with your API key
+            const endpoint = 'https://unique-openai908.openai.azure.com/'; // Replace with your endpoint URL
+
+            const response = await fetch(`${endpoint}/openai/deployments/unique-openai908/completions?api-version=2024-05-01`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    prompt: prompt,
+                    max_tokens: 50
+                })
+            });
+
+            const data = await response.json();
+            document.getElementById('response').textContent = data.choices[0].text;
+        }
+    </script>
+</head>
+<body>
+    <h1>Hello World LLM on Azure</h1>
+    <textarea id="prompt" rows="4" cols="50" placeholder="Enter your prompt here..."></textarea><br>
+    <button onclick="fetchLLMResponse()">Submit</button>
+    <pre id="response"></pre>
+</body>
+</html>
